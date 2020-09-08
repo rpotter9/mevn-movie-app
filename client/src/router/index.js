@@ -1,14 +1,17 @@
 import Vue from "vue";
 import VueRouter from "vue-router";
-import Home from "../views/Home.vue";
+import Movies from "../features/movie/Movies.vue";
+
+import { movieRoutes } from '../features/movie' 
 
 Vue.use(VueRouter);
 
-const routes = [
+
+const appRoutes = [
   {
     path: "/",
-    name: "Home",
-    component: Home
+    name: "Movies",
+    component: Movies
   },
   {
     path: "/about",
@@ -18,8 +21,16 @@ const routes = [
     // which is lazy-loaded when the route is visited.
     component: () =>
       import(/* webpackChunkName: "about" */ "../views/About.vue")
-  }
+  },
+
 ];
+
+const routes = [
+  ...appRoutes,
+  ...movieRoutes
+]
+
+
 
 const router = new VueRouter({
   mode: "history",
