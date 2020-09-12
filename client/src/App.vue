@@ -1,12 +1,9 @@
 <template>
   <div id="app">
-    <div id="nav">
-      <NavBar></NavBar>
-    </div>
+    <NavBar></NavBar>
     <router-view />
   </div>
 </template>
-
 
 <script>
 import NavBar from './views/NavBar'
@@ -17,7 +14,6 @@ export default {
 }
 </script>
 
-
 <style lang="scss">
 #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;
@@ -25,5 +21,6 @@ export default {
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: #2c3e50;
+  background: #555555;
 }
 </style>
