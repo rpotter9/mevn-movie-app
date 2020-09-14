@@ -5,7 +5,6 @@ import { movieStore } from '@/features/movie'
 Vue.use(Vuex)
 
 export default new Vuex.Store({
-
   state: {},
   mutations: {},
   actions: {},

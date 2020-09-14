@@ -1,12 +1,6 @@
 <template>
-  <div class="bg-info">
-    <b-navbar
-      toggleable="lg"
-      type="dark"
-      variant="info"
-      sticky
-      class="container"
-    >
+  <div class="bg-primary">
+    <b-navbar toggleable="lg" type="dark" sticky class="container">
       <b-navbar-brand to="/">Movie App</b-navbar-brand>
 
       <b-navbar-toggle target="nav-collapse"></b-navbar-toggle>

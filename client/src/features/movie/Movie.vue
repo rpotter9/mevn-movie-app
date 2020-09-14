@@ -1,6 +1,6 @@
 <template>
   <div @click="viewMovieDetail">
-    <div>
+    <div class="movie-image">
       <b-img-lazy fluid :src="imageUrl"></b-img-lazy>
     </div>
 
@@ -28,9 +28,17 @@ export default {
 <style lang="scss">
 .movie {
   cursor: pointer;
+  margin: 30px;
 
-  &:hover {
-    border: 1px solid red;
+  .movie-image {
+    transition: all 0.3s ease;
+    -webkit-box-shadow: 0px 10px 24px 0px rgba(0, 0, 0, 0.75);
+    -moz-box-shadow: 0px 10px 24px 0px rgba(0, 0, 0, 0.75);
+    box-shadow: 0px 10px 24px 0px rgba(0, 0, 0, 0.75);
+
+    &:hover {
+      transform: translateY(-10px);
+    }
   }
 }
 </style>

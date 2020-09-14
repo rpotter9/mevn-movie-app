@@ -20,7 +20,13 @@ export default {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
-  color: #2c3e50;
-  background: #555555;
+  color: #f5fbef;
+  background: rgb(30, 40, 49);
+  background: linear-gradient(
+    180deg,
+    rgba(30, 40, 49, 1) 0%,
+    rgba(49, 66, 77, 1) 72%,
+    rgba(54, 73, 85, 1) 100%
+  );
 }
 </style>
