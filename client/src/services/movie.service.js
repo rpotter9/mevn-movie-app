@@ -15,4 +15,10 @@ export class MovieService {
     const res = await httpClient.get(`/movies/${id}/credits`)
     return res.data
   }
+
+  async getMovieTrailer(id) {
+    const res = await httpClient.get(`/movies/${id}/videos`)
+    return res.data.results
+  }
+
 }

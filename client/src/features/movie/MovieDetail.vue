@@ -2,40 +2,51 @@
   <div>
     <section
       id="movie-image"
-      :style="{ backgroundImage: `url(${backgroundImg})` }"
-    ></section>
+      :style="{ backgroundImage: `url(${backgroundImg})` }">
+    
+    </section>
+
     <div id="movie-details" class="container-md">
+
       <div id="movie">
+
         <div>
           <b-img-lazy
             :src="`https://image.tmdb.org/t/p/w200/${movie.poster_path}`"
           ></b-img-lazy>
         </div>
+
         <div class="d-flex flex-column">
           <div class="d-flex">
+
             <div class="container-md text-left">
               <h1>{{ movie.title }}</h1>
+
               <p>
                 <i>{{ movie.tagline }}</i>
               </p>
+
               <div id="movie-genres">
                 <div class="movie-genre" v-for="genre in genres" :key="genre" >
                   <h5><b-badge variant="primary">{{ genre }}</b-badge></h5>
                 </div>
               </div>
 
+
               <b-card-text>
                 {{ movie.overview }}
               </b-card-text>
-              <b-card-text>
-                <!--{{ genres }}-->
-              </b-card-text>
             </div>
-              <div id="vote-average-box" :style="{ backgroundColor: ratingBgColor }">
-                <h1>{{ movie.vote_average }}</h1>
+
+            <Rating id="vote-average-box" :rating="movie.vote_average">
+              <template #rating="{ rating }">
+                <h1>{{ rating }}</h1>
+              </template>
+              <template #extra-text>
                 <p>Rating</p>
-              </div>
-           
+              </template>
+            </Rating>
+
           </div>
           <div id="movie-release-info" >
             <div>Release Date: {{ movie.release_date }}</div>
@@ -43,29 +54,40 @@
           </div>
         </div>
       </div>
-      <section>
+      <section class="movie-cast container-md row">
         <div style="text-align: left;">
           <h1>Cast</h1>
         </div>
-        <b-container fluid="md" class="d-md-flex flex-wrap row-cols-3">
+        <b-container fluid="md" class="d-md-flex flex-wrap row-cols-6 row">
           <b-col v-for="actor in credits" :key="actor.id" class="p-2">
             <MovieActor :actor="actor"></MovieActor>
           </b-col>
         </b-container>
       </section>
+      <section v-if="trailer != ''"  class="movie-trailer container-md row">
+        <h1>Trailer</h1>
+        <b-embed
+              type="iframe"
+              aspect="16by9"
+              :src="`https://www.youtube.com/embed/${trailer}`"
+              allowfullscreen
+        ></b-embed>
+      </section>
+
     </div>
   </div>
 </template>
 
 <script>
 import MovieActor from './MovieActor'
-//import Rating from '@/views/Rating'
+import Rating from '@/views/Rating'
 
 export default {
   name: 'MovieDetail',
   data() {
     return {
       movie: {},
+      trailer: '',
       credits: {},
       genres: []
     }
@@ -73,23 +95,6 @@ export default {
   computed: {
     backgroundImg() {
       return `https://image.tmdb.org/t/p/original/${this.movie.backdrop_path}`
-    },
-    ratingBgColor(){
-      const rating = parseFloat(this.movie.vote_average)
-      console.log(rating)
-      if(rating >= 7.0){
-        return 'green'
-      }
-      else if(rating <= 6.9 && rating >= 5.0){
-        return 'orange'
-      }
-      else if(rating <= 4)
-      {
-        return 'red'
-      }
-      else {
-        return ''
-      }
     }
   },
   methods: {
@@ -103,19 +108,18 @@ export default {
       const data = await this.$movieService.getMovieDetails(id)
       this.movie = data
 
-      
 
       await this.getCredits()
-      /*let genres = []
-      for (let genreId in data.genre_ids) {
-        const genre = this.$store.getters.getGenreById(genreId)
-
-        genres.push(genre.name)
-      }*/
 
       this.movie.genres.forEach( g => {
         this.genres.push(g.name)
       })
+
+      const trailerObj = await this.$movieService.getMovieTrailer(id)
+
+      this.trailer = trailerObj[0].key
+
+
     },
     async getCredits() {
       const id = this.$route.params.id
@@ -133,7 +137,7 @@ export default {
   },
   components: {
     MovieActor,
-    //Rating
+    Rating
   }
 }
 </script>
@@ -183,7 +187,6 @@ export default {
 
     #vote-average-box {
       padding: 30px;
-      background-color: #ee2e31;
       height: 140px;
     }
 
@@ -195,6 +198,11 @@ export default {
       align-items: flex-end;
       justify-content: space-around;
     }
+  }
+
+  .movie-cast{
+    background: #f5fbef;
+    color: rgba(54, 73, 85, 1);
   }
 }
 </style>

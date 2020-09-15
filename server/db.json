@@ -646,5 +646,20 @@
           "id": 37,
           "name": "Western"
         }
-      ]
+      ],
+    "videos": {
+        "id": 718444,
+        "results": [
+          {
+            "id": "5f1720a851e6ab0038cda6bd",
+            "iso_639_1": "en",
+            "iso_3166_1": "US",
+            "key": "IpSK2CsKULg",
+            "name": "Rogue (2020 Movie) Official Trailer – Megan Fox, Philip Winchester",
+            "site": "YouTube",
+            "size": 1080,
+            "type": "Trailer"
+          }
+        ]
+    }
 }
