@@ -8,7 +8,7 @@
 
     <div id="movie-details" class="container-md">
 
-      <div id="movie">
+      <div id="movie" class="container-md row p-3">
 
         <div>
           <b-img-lazy
@@ -54,17 +54,19 @@
           </div>
         </div>
       </div>
-      <section class="movie-cast container-md row">
+
+      <section class="movie-cast container-md row p-3">
         <div style="text-align: left;">
           <h1>Cast</h1>
         </div>
-        <b-container fluid="md" class="d-md-flex flex-wrap row-cols-6 row">
+        <b-container fluid="md" class="d-md-flex flex-wrap row-cols-6 row p-3">
           <b-col v-for="actor in credits" :key="actor.id" class="p-2">
             <MovieActor :actor="actor"></MovieActor>
           </b-col>
         </b-container>
       </section>
-      <section v-if="trailer != ''"  class="movie-trailer container-md row">
+
+      <section v-if="trailer != ''"  class="movie-trailer container-md row p-3">
         <h1>Trailer</h1>
         <b-embed
               type="iframe"
@@ -72,6 +74,10 @@
               :src="`https://www.youtube.com/embed/${trailer}`"
               allowfullscreen
         ></b-embed>
+      </section>
+
+      <section class="movie-gallery container-md row p-3">
+        <h1>Gallery</h1>
       </section>
 
     </div>
@@ -88,6 +94,7 @@ export default {
     return {
       movie: {},
       trailer: '',
+      images: [],
       credits: {},
       genres: []
     }
@@ -201,6 +208,15 @@ export default {
   }
 
   .movie-cast{
+    background: #f5fbef;
+    color: rgba(54, 73, 85, 1);
+  }
+
+  .movie-trailer{
+    background: black
+  }
+
+  .movie-gallery {
     background: #f5fbef;
     color: rgba(54, 73, 85, 1);
   }

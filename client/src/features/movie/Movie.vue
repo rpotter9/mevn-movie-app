@@ -2,7 +2,7 @@
   <div @click="viewMovieDetail">
     <div class="movie-image">
       <b-img-lazy fluid :src="imageUrl"></b-img-lazy>
-      <Rating class="rating" :rating="movie.vote_average">
+      <Rating class="rating shadow-lg" :rating="movie.vote_average">
         <template #rating="{ rating }">
           <div>{{ rating }}</div>
         </template>
@@ -39,6 +39,7 @@ export default {
 .movie {
   cursor: pointer;
   margin: 30px;
+  width: 185px;
 
   .movie-image {
     transition: all 0.3s ease;
