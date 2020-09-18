@@ -76,9 +76,16 @@
         ></b-embed>
       </section>
 
-      <section class="movie-gallery container-md row p-3">
+      <section v-if="images.length > 0" class="movie-gallery container-md row p-3">
         <h1>Gallery</h1>
+        <GalleryCarousel :images="images"></GalleryCarousel>
       </section>
+
+      <section class="movie-gallery container-md row p-3">
+        <h1>Recommended Movies</h1>
+        <Movies></Movies>
+      </section>
+
 
     </div>
   </div>
@@ -87,6 +94,8 @@
 <script>
 import MovieActor from './MovieActor'
 import Rating from '@/views/Rating'
+import GalleryCarousel from '@/views/GalleryCarousel'
+import Movies from './Movies'
 
 export default {
   name: 'MovieDetail',
@@ -105,6 +114,7 @@ export default {
     }
   },
   methods: {
+
     async getMovieDetails() {
       const id = this.$route.params.id
 
@@ -126,6 +136,22 @@ export default {
 
       this.trailer = trailerObj[0].key
 
+      const imageResults = await this.$movieService.getMovieImages(id)
+
+
+      
+      if (imageResults)
+      {
+        const tmdbImageUrl = 'https://image.tmdb.org/t/p/original'
+        for (let i=0; i < imageResults.length; i++) {
+          let image = imageResults[i]
+          if (image.file_path &&  image.file_path != '') {
+            this.images.push(tmdbImageUrl + image.file_path)
+          }
+        }
+      }
+
+
 
     },
     async getCredits() {
@@ -139,12 +165,14 @@ export default {
       this.credits = data
     }
   },
-  mounted() {
+  created() {
     this.getMovieDetails()
   },
   components: {
+    Movies,
     MovieActor,
-    Rating
+    Rating,
+    GalleryCarousel
   }
 }
 </script>

@@ -21,4 +21,9 @@ export class MovieService {
     return res.data.results
   }
 
+  async getMovieImages(id) {
+    const res = await httpClient.get(`/movies/${id}/images`)
+    return res.data.backdrops
+  }
+
 }
