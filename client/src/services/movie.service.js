@@ -26,4 +26,10 @@ export class MovieService {
     return res.data.backdrops
   }
 
+  async getMovieRecommendations(id) {
+    const res = await httpClient.get(`/movies/${id}/recommendations`)
+    return res.data
+  }
+
+
 }

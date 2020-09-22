@@ -38,7 +38,7 @@
               </b-card-text>
             </div>
 
-            <Rating id="vote-average-box" :rating="movie.vote_average">
+            <Rating v-if="movie.vote_average" id="vote-average-box" :rating="movie.vote_average">
               <template #rating="{ rating }">
                 <h1>{{ rating }}</h1>
               </template>
@@ -83,7 +83,7 @@
 
       <section class="movie-gallery container-md row p-3">
         <h1>Recommended Movies</h1>
-        <Movies></Movies>
+        <Movies v-if="recommendedMovies.length > 0" :movies="recommendedMovies"></Movies>
       </section>
 
 
@@ -105,18 +105,28 @@ export default {
       trailer: '',
       images: [],
       credits: {},
-      genres: []
+      genres: [],
+      recommendedMovies: {},
+      tmdbImageUrl: 'https://image.tmdb.org/t/p/original/'
+    }
+  },
+  props: {
+    id: {
+      type: Number,
+      required: true
     }
   },
   computed: {
     backgroundImg() {
-      return `https://image.tmdb.org/t/p/original/${this.movie.backdrop_path}`
+      return this.tmdbImageUrl + this.movie.backdrop_path
     }
   },
   methods: {
 
     async getMovieDetails() {
-      const id = this.$route.params.id
+      Object.assign(this.$data, this.$options.data())
+
+      const id = this.id
 
       if (id === null) {
         throw new Error('Must specify a ID!')
@@ -127,31 +137,16 @@ export default {
 
 
       await this.getCredits()
+      await this.getMovieTrailer()
+      await this.getMovieImages()
 
       this.movie.genres.forEach( g => {
         this.genres.push(g.name)
       })
-
-      const trailerObj = await this.$movieService.getMovieTrailer(id)
-
-      this.trailer = trailerObj[0].key
-
-      const imageResults = await this.$movieService.getMovieImages(id)
-
-
       
-      if (imageResults)
-      {
-        const tmdbImageUrl = 'https://image.tmdb.org/t/p/original'
-        for (let i=0; i < imageResults.length; i++) {
-          let image = imageResults[i]
-          if (image.file_path &&  image.file_path != '') {
-            this.images.push(tmdbImageUrl + image.file_path)
-          }
-        }
-      }
-
-
+    
+      await this.getMovieRecommendations()
+      
 
     },
     async getCredits() {
@@ -163,7 +158,35 @@ export default {
 
       const data = await this.$movieService.getMovieCredits(id)
       this.credits = data
+    },
+    async getMovieImages(){
+      const imageResults = await this.$movieService.getMovieImages(this.id)
+
+      if (imageResults)
+      {
+   
+        for (let i=0; i < imageResults.length; i++) {
+          let image = imageResults[i]
+          if (image.file_path &&  image.file_path != '') {
+            this.images.push(this.tmdbImageUrl + image.file_path)
+          }
+        }
+      }
+    },
+    async getMovieTrailer(){
+      const trailerObj = await this.$movieService.getMovieTrailer(this.id)
+
+      this.trailer = trailerObj[0].key
+
+    },
+    async getMovieRecommendations(){
+      const res = await this.$movieService.getMovieRecommendations(this.id)
+
+      this.recommendedMovies = res.results
     }
+  },
+  watch: {
+    $route: "getMovieDetails"
   },
   created() {
     this.getMovieDetails()

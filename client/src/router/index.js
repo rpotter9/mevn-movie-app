@@ -1,7 +1,8 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
-import Movies from '../features/movie/Movies.vue'
 
+import Home from '@/views/Home'
+import Search from '@/views/Search'
 import { movieRoutes } from '../features/movie'
 
 Vue.use(VueRouter)
@@ -9,8 +10,14 @@ Vue.use(VueRouter)
 const appRoutes = [
   {
     path: '/',
-    name: 'Movies',
-    component: Movies
+    name: 'Home',
+    component: Home,
+  },
+  {
+    path: '/search',
+    name: 'Search',
+    component: Search,
+    props: route => ({ query: route.query.q })
   },
   {
     path: '/about',
@@ -28,7 +35,14 @@ const routes = [...appRoutes, ...movieRoutes]
 const router = new VueRouter({
   mode: 'history',
   base: process.env.BASE_URL,
-  routes
+  routes,
+  scrollBehavior (to, from, savedPosition) {
+    if (savedPosition) {
+      return savedPosition
+    } else {
+      return { x: 0, y: 0 }
+    }
+  }
 })
 
 export default router

@@ -4,7 +4,8 @@ const routes = [
   {
     path: '/movies/:id',
     name: 'MovieDetail',
-    component: MovieDetail
+    component: MovieDetail,
+    props: true
   }
 ]
 

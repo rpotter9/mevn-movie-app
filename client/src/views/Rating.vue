@@ -13,6 +13,9 @@ export default {
   name: 'Rating',
   computed: {
     ratingBgColour(){
+      if(!this.rating)
+        return ''
+
       const rating = parseFloat(this.rating)
       if(rating >= 7.0){
         return '#72CD3D'
@@ -29,7 +32,7 @@ export default {
       }
     },
     ratingFormatted() {
-      return this.rating.toFixed(1)
+      return this.rating ? this.rating.toFixed(1) : ''
     }
   },
   props: {

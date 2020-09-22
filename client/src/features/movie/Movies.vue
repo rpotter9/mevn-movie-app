@@ -8,6 +8,7 @@
         :movie="movie"
       ></Movie>
     </b-row>
+    <slot name="pagination"></slot>
   </b-container>
 </template>
 
@@ -30,14 +31,11 @@ export default {
       return arrayChunks
     }
   },
-  data() {
-    return {
-      movies: {}
+  props: {
+    movies: {
+      type: Array,
+      required: true
     }
-  },
-  async mounted() {
-    const data = await this.$movieService.getPopularMovies()
-    this.movies = data
   },
   components: {
     Movie
