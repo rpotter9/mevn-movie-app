@@ -1,10 +1,23 @@
-const tmdbApi = require('./tmdbApi')
+const express = require('express')
+const cors = require('cors')
+//const db = require('./db')
+const app = express()
 
-;(async() => {
-    const res = await tmdbApi.searchMovie({
-        query: 'avengers',
-        page: 2
-    })
+const routes = require('./routes')
 
-    console.log(res)
-})()
+app.use(cors())
+app.use(express.json())
+
+
+/**
+ * Setup database connection and models
+ */
+//db.init()
+
+const port = process.env.PORT || 3000
+
+
+routes.registerRoutes(app)
+
+
+app.listen(port, () => console.log(`Listening on http://localhost:${port}`))

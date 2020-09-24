@@ -2,7 +2,7 @@ import httpClient from './api.service'
 
 export class MovieService {
   async getPopularMovies() {
-    const res = await httpClient.get('/movies')
+    const res = await httpClient.get('/movies/popular')
     return res.data
   }
 
@@ -31,5 +31,13 @@ export class MovieService {
     return res.data
   }
 
+  async searchMovies(query){
+
+    const res = await httpClient.post(`/search/movie`, {
+      query
+    })
+
+    return res.data
+  }
 
 }

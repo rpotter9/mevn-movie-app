@@ -24,8 +24,8 @@ export default {
   },
   methods: {
     async getPopularMovies(){
-      const res = await this.$movieService.getPopularMovies()
-      this.movies  = res
+      const data = await this.$movieService.getPopularMovies()
+      this.movies  = data.results
     }
   },
   created(){

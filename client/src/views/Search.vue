@@ -23,9 +23,9 @@ export default {
     props: ['query'],
     methods: {
         async search(){
-            const data = await this.$movieService.getPopularMovies()
+            const data = await this.$movieService.searchMovies(this.query)
 
-            this.movies = data
+            this.movies = data.results
         }
     },
     watch: {

@@ -8,12 +8,13 @@ const path = require('path'),
  */
 exports.registerRoutes = app => {
 	//@ require all controllers here
-	fs.readdirSync(location)
-		.filter(dir => {
-			return fs.statSync(`${location}/${dir}`).isDirectory()
+	fs.readdirSync('./routes')
+		.filter(file => {
+			return file != 'index.js'
 		})
-		.forEach(dir => {
-			let fileObj = require(path.resolve(`./modules/${dir}/routes/${dir}.routes`))
+		.forEach(file => {
+		
+			let fileObj = require(path.resolve(`./routes/${file}`))
 			app.use(config.api.prefix + fileObj.base, fileObj.router)
 		})
 }
