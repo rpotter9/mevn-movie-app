@@ -1,7 +1,6 @@
 <template>
   <div>
-    <b-form-input v-model="search" placeholder="Search" debounce="500"></b-form-input>
-    <div class="mt-2">You searched: "{{ search }}"</div>
+    <b-form-input v-model="search" placeholder="Search" debounce="1000"></b-form-input>
   </div>
 </template>
 

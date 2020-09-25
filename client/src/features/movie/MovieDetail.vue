@@ -157,7 +157,7 @@ export default {
       }
 
       const data = await this.$movieService.getMovieCredits(id)
-      this.credits = data
+      this.credits = data.cast
     },
     async getMovieImages(){
       const imageResults = await this.$movieService.getMovieImages(this.id)
