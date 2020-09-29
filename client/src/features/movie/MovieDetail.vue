@@ -59,7 +59,7 @@
         <div style="text-align: left;">
           <h1>Cast</h1>
         </div>
-        <b-container fluid="md" class="d-md-flex flex-wrap row-cols-6 row p-3">
+        <b-container fluid="md" class="overflow-auto d-md-flex row-cols-6 p-3">
           <b-col v-for="actor in credits" :key="actor.id" class="p-2">
             <MovieActor :actor="actor"></MovieActor>
           </b-col>

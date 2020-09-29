@@ -1,6 +1,5 @@
 const path = require('path'),
 	fs = require('fs'),
-	location = path.resolve('./modules'),
 	config = require('../config')
 
 /**
@@ -15,6 +14,8 @@ exports.registerRoutes = app => {
 		.forEach(file => {
 		
 			let fileObj = require(path.resolve(`./routes/${file}`))
+
 			app.use(config.api.prefix + fileObj.base, fileObj.router)
 		})
+		
 }

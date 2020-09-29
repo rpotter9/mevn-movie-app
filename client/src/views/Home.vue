@@ -4,10 +4,12 @@
       <SearchInput></SearchInput>
     </section>
     <section class="container-md text-left">
-      <h1>Popular Movies</h1>
+      <h1>Latest Popular Movies</h1>
         <Movies v-if="movies.length > 0" :movies="movies"></Movies>
     </section>
-  
+    <section>
+      <Movies :movies="nowPlaying"></Movies>
+    </section>
   </div>
 </template>
 
@@ -19,17 +21,26 @@ export default {
   name: 'Home',
   data(){
     return {
-      movies: {}
+      movies: {},
+      nowPlaying: {}
     }
   },
   methods: {
+    async initPage(){
+      this.getPopularMovies()
+      this.getTop5NowPlaying()
+    },
     async getPopularMovies(){
       const data = await this.$movieService.getPopularMovies()
       this.movies  = data.results
+    },
+    async getTop5NowPlaying(){
+      const data = await this.$movieService.getMovieNowPlaying(5)
+      this.nowPlaying = data.results
     }
   },
   created(){
-    this.getPopularMovies()
+    this.initPage()
   },
   components: {
     Movies,

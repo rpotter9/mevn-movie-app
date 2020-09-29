@@ -21,7 +21,13 @@ export default {
   props: ['movie'],
   computed: {
     imageUrl() {
-      return `http://image.tmdb.org/t/p/w185//${this.movie.poster_path}`
+      if(this.movie.poster_path){
+        return `http://image.tmdb.org/t/p/w185//${this.movie.poster_path}`
+      }
+      else{
+        return ''
+      }
+      
     }
   },
   methods: {

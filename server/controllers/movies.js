@@ -1,6 +1,7 @@
 const tmdbApi = require('../tmdbApi')
 
 module.exports = {
+
     async getPopular (req, res) {
 		try {
 			
@@ -17,6 +18,7 @@ module.exports = {
     
     async getById (req, res) {
 		try {
+			console.log("here 2")
 			const { id }  = req.params
 
             if(!id)
@@ -94,9 +96,25 @@ module.exports = {
 		}
         
 
+	},
+	async getMovieNowPlaying (req, res) {
+
+		try {
+
+			console.log("Here")
+
+			const { limit } = req.query
+
+			const data = await tmdbApi.movieNowPlaying()
+			
+			if ( limit )
+				data.results.length = limit
+
+			return res.status(200).send(data)
+
+		} catch (error) {
+			return res.status(500).send(error.message)
+		}
 	}
-
-
-
 
 }

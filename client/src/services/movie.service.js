@@ -31,10 +31,21 @@ export class MovieService {
     return res.data
   }
 
-  async searchMovies(query){
+  async getMovieNowPlaying( limit ) {
+
+    const params = {
+      limit
+    }
+
+    const res = await httpClient.get(`/movies/nowplaying`, { params })
+    return res.data
+  }
+
+  async searchMovies(query, page){
 
     const res = await httpClient.post(`/search/movie`, {
-      query
+      query,
+      page
     })
 
     return res.data

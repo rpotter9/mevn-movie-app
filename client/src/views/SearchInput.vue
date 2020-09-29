@@ -14,7 +14,6 @@
     },
     watch: {
         search(){
-            console.log(`you search ${this.search}`)
             this.$router.push({ name: 'Search', query: { q: this.search } })
         }
     }
