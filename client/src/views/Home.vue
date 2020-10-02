@@ -1,50 +1,56 @@
 <template>
   <div class="home">
-    <section class="search bg-primary">
-      <SearchInput></SearchInput>
+    <section class="now-playing">
+      <GalleryCarousel :controls="false"></GalleryCarousel>
     </section>
     <section class="container-md text-left">
       <h1>Latest Popular Movies</h1>
-        <Movies v-if="movies.length > 0" :movies="movies"></Movies>
-    </section>
-    <section>
-      <Movies :movies="nowPlaying"></Movies>
+      <Movies v-if="movies.length > 0" :movies="movies"></Movies>
     </section>
   </div>
 </template>
 
 <script>
 import Movies from '@/features/movie/Movies'
-import SearchInput from './SearchInput'
+import GalleryCarousel from './GalleryCarousel'
 
 export default {
   name: 'Home',
-  data(){
+  data() {
     return {
       movies: {},
       nowPlaying: {}
     }
   },
   methods: {
-    async initPage(){
+    async initPage() {
       this.getPopularMovies()
       this.getTop5NowPlaying()
     },
-    async getPopularMovies(){
+    async getPopularMovies() {
       const data = await this.$movieService.getPopularMovies()
-      this.movies  = data.results
+      this.movies = data.results
     },
-    async getTop5NowPlaying(){
+    async getTop5NowPlaying() {
       const data = await this.$movieService.getMovieNowPlaying(5)
-      this.nowPlaying = data.results
+      data.results.forEach( d => {
+        const obj = {
+          image: d.backdrop_path,
+          title: d.original_title,
+          description: d.description,
+          link: `/movie/${d.id}`
+        }
+
+        this.nowPlaying.push(obj)
+      })
     }
   },
-  created(){
+  created() {
     this.initPage()
   },
   components: {
     Movies,
-    SearchInput
+    GalleryCarousel
   }
 }
 </script>

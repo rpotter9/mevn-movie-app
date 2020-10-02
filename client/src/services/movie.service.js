@@ -31,8 +31,7 @@ export class MovieService {
     return res.data
   }
 
-  async getMovieNowPlaying( limit ) {
-
+  async getMovieNowPlaying(limit) {
     const params = {
       limit
     }
@@ -41,8 +40,7 @@ export class MovieService {
     return res.data
   }
 
-  async searchMovies(query, page){
-
+  async searchMovies(query, page) {
     const res = await httpClient.post(`/search/movie`, {
       query,
       page
@@ -50,5 +48,4 @@ export class MovieService {
 
     return res.data
   }
-
 }

@@ -2,11 +2,11 @@
   <div class="bg-primary">
     <b-navbar toggleable="lg" type="dark" sticky class="container">
       <b-navbar-brand to="/">Movie App</b-navbar-brand>
-      
+
       <div>
-        <SearchInput v-if="$route.name != 'Home'" ></SearchInput>
+        <SearchInput></SearchInput>
       </div>
-      
+
       <b-navbar-toggle target="nav-collapse"></b-navbar-toggle>
 
       <b-collapse id="nav-collapse" is-nav>
@@ -22,7 +22,7 @@ import SearchInput from './SearchInput'
 
 export default {
   name: 'NavBar',
-  components:{
+  components: {
     SearchInput
   }
 }

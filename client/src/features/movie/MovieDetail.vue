@@ -2,14 +2,11 @@
   <div>
     <section
       id="movie-image"
-      :style="{ backgroundImage: `url(${backgroundImg})` }">
-    
-    </section>
+      :style="{ backgroundImage: `url(${backgroundImg})` }"
+    ></section>
 
     <div id="movie-details" class="container-md">
-
       <div id="movie" class="container-md row p-3">
-
         <div>
           <b-img-lazy
             :src="`https://image.tmdb.org/t/p/w200/${movie.poster_path}`"
@@ -18,7 +15,6 @@
 
         <div class="d-flex flex-column">
           <div class="d-flex">
-
             <div class="container-md text-left">
               <h1>{{ movie.title }}</h1>
 
@@ -27,18 +23,23 @@
               </p>
 
               <div id="movie-genres">
-                <div class="movie-genre" v-for="genre in genres" :key="genre" >
-                  <h5><b-badge variant="primary">{{ genre }}</b-badge></h5>
+                <div class="movie-genre" v-for="genre in genres" :key="genre">
+                  <h5>
+                    <b-badge variant="primary">{{ genre }}</b-badge>
+                  </h5>
                 </div>
               </div>
-
 
               <b-card-text>
                 {{ movie.overview }}
               </b-card-text>
             </div>
 
-            <Rating v-if="movie.vote_average" id="vote-average-box" :rating="movie.vote_average">
+            <Rating
+              v-if="movie.vote_average"
+              id="vote-average-box"
+              :rating="movie.vote_average"
+            >
               <template #rating="{ rating }">
                 <h1>{{ rating }}</h1>
               </template>
@@ -46,9 +47,8 @@
                 <p>Rating</p>
               </template>
             </Rating>
-
           </div>
-          <div id="movie-release-info" >
+          <div id="movie-release-info">
             <div>Release Date: {{ movie.release_date }}</div>
             <div>Runtime: {{ movie.runtime | toHoursMins }}</div>
           </div>
@@ -66,27 +66,31 @@
         </b-container>
       </section>
 
-      <section v-if="trailer != ''"  class="movie-trailer container-md row p-3">
+      <section v-if="trailer != ''" class="movie-trailer container-md row p-3">
         <h1>Trailer</h1>
         <b-embed
-              type="iframe"
-              aspect="16by9"
-              :src="`https://www.youtube.com/embed/${trailer}`"
-              allowfullscreen
+          type="iframe"
+          aspect="16by9"
+          :src="`https://www.youtube.com/embed/${trailer}`"
+          allowfullscreen
         ></b-embed>
       </section>
 
-      <section v-if="images.length > 0" class="movie-gallery container-md row p-3">
+      <section
+        v-if="images.length > 0"
+        class="movie-gallery container-md row p-3"
+      >
         <h1>Gallery</h1>
         <GalleryCarousel :images="images"></GalleryCarousel>
       </section>
 
       <section class="movie-gallery container-md row p-3">
         <h1>Recommended Movies</h1>
-        <Movies v-if="recommendedMovies.length > 0" :movies="recommendedMovies"></Movies>
+        <Movies
+          v-if="recommendedMovies.length > 0"
+          :movies="recommendedMovies"
+        ></Movies>
       </section>
-
-
     </div>
   </div>
 </template>
@@ -122,7 +126,6 @@ export default {
     }
   },
   methods: {
-
     async getMovieDetails() {
       Object.assign(this.$data, this.$options.data())
 
@@ -135,19 +138,15 @@ export default {
       const data = await this.$movieService.getMovieDetails(id)
       this.movie = data
 
-
       await this.getCredits()
       await this.getMovieTrailer()
       await this.getMovieImages()
 
-      this.movie.genres.forEach( g => {
+      this.movie.genres.forEach(g => {
         this.genres.push(g.name)
       })
-      
-    
-      await this.getMovieRecommendations()
-      
 
+      await this.getMovieRecommendations()
     },
     async getCredits() {
       const id = this.$route.params.id
@@ -159,34 +158,31 @@ export default {
       const data = await this.$movieService.getMovieCredits(id)
       this.credits = data.cast
     },
-    async getMovieImages(){
+    async getMovieImages() {
       const imageResults = await this.$movieService.getMovieImages(this.id)
 
-      if (imageResults)
-      {
-   
-        for (let i=0; i < imageResults.length; i++) {
+      if (imageResults) {
+        for (let i = 0; i < imageResults.length; i++) {
           let image = imageResults[i]
-          if (image.file_path &&  image.file_path != '') {
+          if (image.file_path && image.file_path != '') {
             this.images.push(this.tmdbImageUrl + image.file_path)
           }
         }
       }
     },
-    async getMovieTrailer(){
+    async getMovieTrailer() {
       const trailerObj = await this.$movieService.getMovieTrailer(this.id)
 
       this.trailer = trailerObj[0].key
-
     },
-    async getMovieRecommendations(){
+    async getMovieRecommendations() {
       const res = await this.$movieService.getMovieRecommendations(this.id)
 
       this.recommendedMovies = res.results
     }
   },
   watch: {
-    $route: "getMovieDetails"
+    $route: 'getMovieDetails'
   },
   created() {
     this.getMovieDetails()
@@ -238,7 +234,7 @@ export default {
       display: flex;
       margin-left: -5px;
 
-      .movie-genre{
+      .movie-genre {
         margin: 0 5px;
       }
     }
@@ -258,13 +254,13 @@ export default {
     }
   }
 
-  .movie-cast{
+  .movie-cast {
     background: #f5fbef;
     color: rgba(54, 73, 85, 1);
   }
 
-  .movie-trailer{
-    background: black
+  .movie-trailer {
+    background: black;
   }
 
   .movie-gallery {

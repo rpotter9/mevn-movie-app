@@ -1,25 +1,27 @@
 <template>
   <div>
-    <b-form-input v-model="search" placeholder="Search" debounce="1000"></b-form-input>
+    <b-form-input
+      v-model="search"
+      placeholder="Search"
+      debounce="1000"
+    ></b-form-input>
   </div>
 </template>
 
 <script>
-  export default {
-    name: 'SearchInput',
-    data() {
-      return {
-        search: ''
-      }
-    },
-    watch: {
-        search(){
-            this.$router.push({ name: 'Search', query: { q: this.search } })
-        }
+export default {
+  name: 'SearchInput',
+  data() {
+    return {
+      search: ''
+    }
+  },
+  watch: {
+    search() {
+      this.$router.push({ name: 'Search', query: { q: this.search } })
     }
   }
+}
 </script>
 
-<style>
-
-</style>
+<style></style>

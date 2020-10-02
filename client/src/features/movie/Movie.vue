@@ -2,7 +2,11 @@
   <div @click="viewMovieDetail">
     <div class="movie-image">
       <b-img-lazy fluid :src="imageUrl"></b-img-lazy>
-      <Rating v-if="movie.vote_average" class="rating shadow-lg" :rating="movie.vote_average">
+      <Rating
+        v-if="movie.vote_average"
+        class="rating shadow-lg"
+        :rating="movie.vote_average"
+      >
         <template #rating="{ rating }">
           <div>{{ rating }}</div>
         </template>
@@ -21,13 +25,11 @@ export default {
   props: ['movie'],
   computed: {
     imageUrl() {
-      if(this.movie.poster_path){
+      if (this.movie.poster_path) {
         return `http://image.tmdb.org/t/p/w185//${this.movie.poster_path}`
-      }
-      else{
+      } else {
         return ''
       }
-      
     }
   },
   methods: {
@@ -35,7 +37,7 @@ export default {
       this.$router.push({ name: 'MovieDetail', params: { id: this.movie.id } })
     }
   },
-  components:{
+  components: {
     Rating
   }
 }
