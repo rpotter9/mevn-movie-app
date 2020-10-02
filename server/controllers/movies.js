@@ -4,8 +4,7 @@ module.exports = {
 
     async getPopular (req, res) {
 		try {
-			
-
+		
     		const data = await tmdbApi.moviePopular()
 
 			return res.status(200).send(data)
@@ -18,7 +17,6 @@ module.exports = {
     
     async getById (req, res) {
 		try {
-			console.log("here 2")
 			const { id }  = req.params
 
             if(!id)
@@ -66,9 +64,10 @@ module.exports = {
 
 	},
 	async getMovieImages (req, res) {
+		
 		try {
+
 			const { id }  = req.params
-			
             if(!id)
                 throw new Error("Must specify a Movie ID")
 
@@ -79,7 +78,6 @@ module.exports = {
 			return res.status(500).send(error.message)
 		}
         
-
 	},
 	async getMovieRecommendations (req, res) {
 		try {
@@ -101,10 +99,8 @@ module.exports = {
 
 		try {
 
-			console.log("Here")
 
 			const { limit } = req.query
-
 			const data = await tmdbApi.movieNowPlaying()
 			
 			if ( limit )
