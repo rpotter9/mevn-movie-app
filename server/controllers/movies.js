@@ -101,7 +101,7 @@ module.exports = {
 
 
 			const { limit } = req.query
-			const data = await tmdbApi.movieNowPlaying()
+			const data = await tmdbApi.movieNowPlaying({ language: 'en-US', region: 'GB' })
 			
 			if ( limit )
 				data.results.length = limit

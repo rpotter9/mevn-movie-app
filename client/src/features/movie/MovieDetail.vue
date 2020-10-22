@@ -81,7 +81,10 @@
         class="movie-gallery container-md row p-3"
       >
         <h1>Gallery</h1>
-        <GalleryCarousel :images="images"></GalleryCarousel>
+        <GalleryCarousel :images="images" 
+        :controls="true"
+        :indicators="true">
+        </GalleryCarousel>
       </section>
 
       <section class="movie-gallery container-md row p-3">
