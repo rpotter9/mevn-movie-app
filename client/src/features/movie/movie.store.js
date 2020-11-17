@@ -10,16 +10,28 @@ const mutations = {
 }
 
 const actions = {
-  async loadGenres({ commit }) {
-    const genres = await this.$genreService.getGenres()
-    commit('LOAD_GENRES', genres)
+
+  async loadGenres({ commit }, genreIds) {
+    
+      let genres=[]
+
+      if(state.genres.length <=0){
+        let result = await this._vm.$genreService.getGenres()
+        genres = result.genres
+        commit('LOAD_GENRES', genres)
+      }
+      else {
+        genres = state.genres
+      }
+    
+    genres = genres.filter(genre => genreIds.indexOf(genre.id) > -1 ).map(genre => ` ${genre.name}`)
+
+    return genres.toString()
+ 
   }
 }
 
 const getters = {
-  getGenreById: state => id => {
-    return state.genres.find(g => g.id == id)
-  }
 }
 
 export default {

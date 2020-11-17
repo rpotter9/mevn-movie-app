@@ -1,11 +1,15 @@
 const tmdbApi = require('../tmdbApi')
 
+const region = {
+	language: 'en-US', region: 'GB'
+}
+
 module.exports = {
 
     async getPopular (req, res) {
 		try {
 		
-    		const data = await tmdbApi.moviePopular()
+    		const data = await tmdbApi.moviePopular(region)
 
 			return res.status(200).send(data)
 		} catch (error) {
@@ -101,7 +105,7 @@ module.exports = {
 
 
 			const { limit } = req.query
-			const data = await tmdbApi.movieNowPlaying({ language: 'en-US', region: 'GB' })
+			const data = await tmdbApi.movieNowPlaying(region)
 			
 			if ( limit )
 				data.results.length = limit

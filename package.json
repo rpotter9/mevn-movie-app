@@ -16,5 +16,6 @@
   "bugs": {
     "url": "https://github.com/rpotter9/mevn-movie-app/issues"
   },
-  "homepage": "https://github.com/rpotter9/mevn-movie-app#readme"
+  "homepage": "https://github.com/rpotter9/mevn-movie-app#readme",
+  "dependencies": {}
 }

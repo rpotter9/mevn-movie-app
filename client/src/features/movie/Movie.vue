@@ -13,7 +13,8 @@
       </Rating>
     </div>
 
-    <p>{{ movie.title }}</p>
+    <p class="movie-title mt-3 font-weight-bold">{{ movie.title }}</p>
+    <p class="movie-genre">{{ genres }}</p>
   </div>
 </template>
 
@@ -21,6 +22,11 @@
 import Rating from '@/views/Rating.vue'
 
 export default {
+  data() {
+    return{
+      genres:''
+    }
+  },
   name: 'Movie',
   props: ['movie'],
   computed: {
@@ -35,7 +41,20 @@ export default {
   methods: {
     viewMovieDetail() {
       this.$router.push({ name: 'MovieDetail', params: { id: this.movie.id } })
+    },
+    async getGenres() {
+
+       if(!this.movie.genre_ids){
+        return ''
+      }
+
+
+      this.genres = await this.$store.dispatch('loadGenres', this.movie.genre_ids )
+      
     }
+  },
+  created(){
+    this.getGenres()
   },
   components: {
     Rating
@@ -72,6 +91,10 @@ export default {
       //-moz-box-shadow: 0px 10px 24px 0px rgba(0, 0, 0, 0.75);
       //box-shadow: 0px 10px 24px 0px rgba(0, 0, 0, 0.75);
     }
+  }
+
+  .movie-genre {
+    font-size: 12px;
   }
 }
 </style>

@@ -1,6 +1,6 @@
 <template>
   <b-container fluid="md">
-    <b-row>
+    <b-row class="justify-content-center">
       <Movie
         class="movie"
         v-for="movie in movies"
